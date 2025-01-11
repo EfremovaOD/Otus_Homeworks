@@ -1,7 +1,9 @@
 # Лабораторная работа. Базовая настройка коммутатора 
 ## Топология
 
-![topology](https://github.com/user-attachments/assets/7063e537-8446-4497-83c4-279c5f879a93)
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/topology.png)
+
+
 
 ## Таблица адресации 
 
@@ -297,21 +299,21 @@
 
 		 ping 192.168.1.1
 
-![ping pc-a](https://github.com/user-attachments/assets/550ec641-6a63-41e7-91c5-162635e00985)
+![ping pc-a](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/ping%20pc-a.png)
 
 
 2. Направляем **Эхо-запрос** на S1:
 
    		 ping 192.168.1.2
 
-![pingechopng](https://github.com/user-attachments/assets/2570446e-a4a1-404a-8035-486f8891fe4d)
+![pingechopng](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/pingechopng.png)
 
 
 #### Шаг 3. Проверьте удаленное управление коммутатором S1
 
 1. Ипользуем команду telnet в командной строке PC-A 
 
-![telnet](https://github.com/user-attachments/assets/aaaceaeb-04dd-486b-9081-6e743bf07394)
+![telnet](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/telnet.png)
 
 
 
