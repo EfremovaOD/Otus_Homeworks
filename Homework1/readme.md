@@ -295,14 +295,14 @@
 
 1. Проверяем доступность PC-A:
 
-		 **ping** 192.168.1.1
+		 ping 192.168.1.1
 
 ![ping pc-a](https://github.com/user-attachments/assets/550ec641-6a63-41e7-91c5-162635e00985)
 
 
 2. Направляем **Эхо-запрос** на S1:
 
-   		 **ping** 192.168.1.2
+   		 ping 192.168.1.2
 
 ![pingechopng](https://github.com/user-attachments/assets/2570446e-a4a1-404a-8035-486f8891fe4d)
 
