@@ -352,19 +352,19 @@
 
 2. Из командной строки PC-B отправьте эхо-запросы на компьютер PC-A, а также коммутаторы S1 и S2:
 
-   a. Ping PC-A:
-   
-![ping pc-a](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20PC-A.png)
+	a. Ping PC-A:
 
-   b. Ping S1:
+   ![ping pc-a](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20PC-A.png)
    
-![ping S1](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20S1.png)
+	b. Ping S1:
 
-   c. Ping S2:
+   ![ping S1](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20S1.png)
    
-![ping S2](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20S2.png)
+   	c. Ping S2:
+    
+   ![ping S2](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20S2.png)
 
-3. Подключившись через консоль к коммутатору S2, введите команду **show mac address-table**:
+4. Подключившись через консоль к коммутатору S2, введите команду **show mac address-table**:
 
        S2#show mac address-table 
                  Mac Address Table
@@ -377,7 +377,7 @@
        1    0090.2b20.79c7    DYNAMIC     Gig0/1
        1    00e0.8fe9.44a1    DYNAMIC     Gig0/1
 
-4. Повторяем запрос **arp -a** на узле PC-B: 
+5. Повторяем запрос **arp -a** на узле PC-B: 
 
        C:\>arp -a 
        Internet Address      Physical Address      Type
