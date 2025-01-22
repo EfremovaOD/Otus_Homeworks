@@ -156,12 +156,12 @@
 
 1.	В режиме глобальной конфигурации копируем следующие базовые параметры конфигурации и вставляем их в файл на коммутаторе S1:
    
-			> no ip domain-lookup
-			>hostname S1
-			>service password-encryption
-			>enable secret class
-			>banner motd #
-			>Unauthorized access is strictly prohibited. #
+			 no ip domain-lookup
+			hostname S1
+			service password-encryption
+			enable secret class
+			banner motd #
+			Unauthorized access is strictly prohibited. #
 
 3. Назначаем ip-адрес:
    
@@ -179,7 +179,7 @@
 
 5. Настраиваем VTY на подключение **Telnet** (с установкой пароля):
    
-			S1(config)#line vtyб
+			S1(config)#line vty 0 4
 			S1(config-line)#password class
 			S1(config-line)#login
 			S1(config-line)#transport input telnet
