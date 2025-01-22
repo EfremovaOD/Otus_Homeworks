@@ -190,238 +190,197 @@
 
 1. В режиме глобальной конфигурации назначаем базовые параметры конфигурации на коммутаторе S1:
    
-			no ip domain-lookup
-			hostname S1
-			service password-encryption
-			enable secret class
-			banner motd #
-			Unauthorized access is strictly prohibited. #
+       no ip domain-lookup
+       hostname S1
+       service password-encryption
+       enable secret class
+       banner motd #
+       Unauthorized access is strictly prohibited. #
 
 3. Назначаем ip-адрес:
    
-			S1#conf t 
-			S1(config)#interface vlan 1
-			S1(config-if)#ip address 192.168.1.11 255.255.255.0
-			S1(config-if)#no shutdown
+       S1#conf t 
+       S1(config)#interface vlan 1
+       S1(config-if)#ip address 192.168.1.11 255.255.255.0
+       S1(config-if)#no shutdown
 
 4. Устанавливаем пароль на подключение через консольный кабель:
    
-			S1(config)#line console 0
-			S1(config-line)#password class
-			S1(config-line)#login
-			S1(config-line)#exit
+       S1(config)#line console 0
+       S1(config-line)#password class
+       S1(config-line)#login
+       S1(config-line)#exit
 
 5. Настраиваем VTY на подключение Telnet (с установкой пароля):
    
-			S1(config)#line vty 0 4
-			S1(config-line)#password class
-			S1(config-line)#login
-			S1(config-line)#transport input telnet. 
+       S1(config)#line vty 0 4
+       S1(config-line)#password class
+       S1(config-line)#login
+       S1(config-line)#transport input telnet. 
 
 
 6. Сохраняем конфигурацию:
 
-			S1#copy running-config startup-config 
-			Destination filename [startup-config]? 
-			Building configuration...
-			[OK]
-			S1#
+       S1#copy running-config startup-config 
+       Destination filename [startup-config]? 
+       Building configuration...
+       [OK]
+       S1#
 
-8. Аналогичные настройки производим на коммутаторе S2:
+7. Аналогичные настройки производим на коммутаторе S2:
 
-			no ip domain-lookup
-			hostname S1
-			service password-encryption
-			enable secret class
-			banner motd #
-			Unauthorized access is strictly prohibited. #
+       no ip domain-lookup
+       hostname S1
+       service password-encryption
+       enable secret class
+       banner motd #
+       Unauthorized access is strictly prohibited. #
 			
-			S2#conf t 
-			S2(config)#interface vlan 1
-			S2(config-if)#ip address 192.168.1.12 255.255.255.0
-			S2(config-if)#no shutdown
+       S2#conf t 
+       S2(config)#interface vlan 1
+       S2(config-if)#ip address 192.168.1.12 255.255.255.0
+       S2(config-if)#no shutdown
+       
+       S2(config)#line console 0
+       S2(config-line)#password class
+       S2(config-line)#login
+       S2(config-line)#exit
+       
+       S2(config)#line vty 0 4
+       S2(config-line)#password class
+       S2(config-line)#login
+       S2(config-line)#transport input telnet.
 			
-			S2(config)#line console 0
-			S2(config-line)#password class
-			S2(config-line)#login
-			S2(config-line)#exit
-			
-			S2(config)#line vty 0 4
-			S2(config-line)#password class
-			S2(config-line)#login
-			S2(config-line)#transport input telnet.
-			
-			S2#copy running-config startup-config 
-			Destination filename [startup-config]? 
-			Building configuration...
-			[OK]
-			S2#
+       S2#copy running-config startup-config 
+       Destination filename [startup-config]? 
+       Building configuration...
+       [OK]
+       S2#
    
-### Часть 2. Настройка базовых параметров сетевых устройств:
+### Часть 2. Изучение таблицы МАС-адресов коммутатора.
 
-#### Шаг 1. Настройте базовые параметры коммутатора
+#### Шаг 1. Запишите МАС-адреса сетевых устройств:
 
-1.	В режиме глобальной конфигурации копируем следующие базовые параметры конфигурации и вставляем их в файл на коммутаторе S1:
-   
-			no ip domain-lookup
-			hostname S1
-			service password-encryption
-			enable secret class
-			banner motd #
-			Unauthorized access is strictly prohibited. #
+1. Откройте командную строку на PC-A и PC-B и введите команду **ipconfig /all**:
 
-3. Назначаем ip-адрес:
-   
-			S1#conf t 
-			S1(config)#interface vlan 1
-			S1(config-if)#ip address 192.168.1.2 255.255.255.0
-			S1(config-if)#no shutdown
+	a. MAC узла PC-A:
+ 
+		Physical Address................: 00E0.8FE9.44A1
 
-4. Устанавливаем пароль на подключение через консольный кабель:
-   
-			S1(config)#line console 0
-			S1(config-line)#password class
-			S1(config-line)#login
-			S1(config-line)#end
+	b. MAC узла PC-B:
 
-5. Настраиваем VTY на подключение **Telnet** (с установкой пароля):
-   
-			S1(config)#line vtyб
-			S1(config-line)#password class
-			S1(config-line)#login
-			S1(config-line)#transport input telnet
+		Physical Address................: 0005.5E04.02C3
 
-#### Шаг 2. Настройте IP-адрес на компьютере PC-A
+2. Подключитесь к коммутаторам S1 и S2 через консоль и введите команду **show interface F0/1** на каждом коммутаторе:
 
-	1. Назначаем PC-A ip-адресс: 192.168.1.1, маска: 255.255.255.0
+   	a. MAC коммутатора S1:
 
-### Часть 3. Проверка сетевых подключений
+		address is 000b.be58.8601 (bia 000b.be58.8601)
 
-#### Шаг 1. Отобразите конфигурацию коммутатора
+	b. MAC коммутатора S2:
 
-		S1#show run
-		Building configuration...
-		
-		Current configuration : 1342 bytes
-		!
-		version 15.0
-		no service timestamps log datetime msec
-				no service timestamps debug datetime msec
-		service password-encryption
-		!
-		hostname S1
-		!
-		enable secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
-		!
-		!
-		!
-		no ip domain-lookup
-		!
-		!
-		!
-		spanning-tree mode pvst
-		spanning-tree extend system-id
-		!
-		interface FastEthernet0/1
-		!
-		interface FastEthernet0/2
-		!
-		interface FastEthernet0/3
-		!
-		interface FastEthernet0/4
-		!
-		interface FastEthernet0/5
-		!
-		interface FastEthernet0/6
-		!
-		interface FastEthernet0/7
-		!
-		interface FastEthernet0/8
-		!
-		interface FastEthernet0/9
-		!
-		interface FastEthernet0/10
-		!
-		interface FastEthernet0/11
-		!
-		interface FastEthernet0/12
-		!
-		interface FastEthernet0/13
-		!
-		interface FastEthernet0/14
-		!
-		interface FastEthernet0/15
-		!
-		interface FastEthernet0/16
-		!
-		interface FastEthernet0/17
-		!
-		interface FastEthernet0/18
-		!
-		interface FastEthernet0/19
-		!
-		interface FastEthernet0/20
-		!
-		interface FastEthernet0/21
-		!
-		nterface FastEthernet0/22
-		!
-		interface FastEthernet0/23
-		!
-		interface FastEthernet0/24
-		!
-		interface GigabitEthernet0/1
-		!
-		interface GigabitEthernet0/2
-		!
-		interface Vlan1
- 		ip address 192.168.1.2 255.255.255.0
-		!
-		banner motd ^C
-		Unauthorized access is strictly prohibited. ^C
-		!
-		!
-		!
-		line con 0
-		 password 7 0822404F1A0A
-		 logging synchronous
-		 login
-				!
-		line vty 0 4
-		 password 7 0822404F1A0A
-		 login
-				 transport input telnet
-		line vty 5 15
- 		password 7 0822404F1A0A
-		 login
-		!
-		!
-		!
-		!
-		end
+		address is 0003.e4b6.a801 (bia 0003.e4b6.a801)
+
+
+#### Шаг 2. Просмотрите таблицу МАС-адресов коммутатора:
+
+1. Подключитесь к коммутатору S2 через консоль и войдите в привилегированный режим EXEC:
+
+       C:\>telnet 192.168.1.12
+       Trying 192.168.1.12 ...Open
+       Unauthorized access is strictly prohibited. 
+       
+       
+       User Access Verification
+       
+       Password: 
+       S2>
+       S2>en
+       Password: 
+       S2#
+
+2. В привилегированном режиме EXEC введите команду **show mac address-table** и нажмите клавишу ввода:
+
+       S2#show mac address-table
+          Mac Address Table
+       -------------------------------------------
+       
+       Vlan    Mac Address       Type        Ports
+       ----    -----------       --------    -----
+       
+        1    0005.5e04.02c3    DYNAMIC     Fa0/1
+        1    000b.be58.8619    DYNAMIC     Gig0/1   
+
+#### Шаг 3. Очистите таблицу МАС-адресов коммутатора S2 и снова отобразите таблицу МАС-адресов:
+
+1. В привилегированном режиме EXEC введите команду **clear mac address-table dynamic** и нажмите клавишу Enter:
+
+       S2#clear mac address-table dynamic 
+
+2. Снова быстро введите команду show mac address-table:
+
+       S2#show mac address-table
+          Mac Address Table
+       -------------------------------------------
+              
+       Vlan    Mac Address       Type        Ports
+       ----    -----------       --------    -----
+       
+         1    0005.5e04.02c3    DYNAMIC     Fa0/1
+
+3. Проверяем результат через 10 сек :
+
+       S2#show mac address-table
+          Mac Address Table
+       -------------------------------------------
+       
+       Vlan    Mac Address       Type        Ports
+       ----    -----------       --------    -----
+       
+        1    0005.5e04.02c3    DYNAMIC     Fa0/1
+        1    000b.be58.8619    DYNAMIC     Gig0/1 
+
   
-#### Шаг 2. Протестируйте сквозное соединение, отправив эхо-запрос
+#### Шаг 4. С компьютера PC-B отправьте эхо-запросы устройствам в сети и просмотрите таблицу МАС-адресов коммутатора:
 
-1. Проверяем доступность PC-A:
-
-		 ping 192.168.1.1
-
-![ping pc-a](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/ping%20pc-a.png)
+1. На компьютере PC-B откройте командную строку и еще раз введите команду **arp -a**:
 
 
-2. Направляем **Эхо-запрос** на S1:
+       C:\>arp -a 
+       Internet Address      Physical Address      Type
+       192.168.1.12          0002.176b.1ede        dynamic
 
-   		 ping 192.168.1.2
+2. Из командной строки PC-B отправьте эхо-запросы на компьютер PC-A, а также коммутаторы S1 и S2:
 
-![pingechopng](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/pingechopng.png)
+   a. Ping PC-A:
+   
+![ping pc-a](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20PC-A.png)
 
+   b. Ping S1:
+   
+![ping S1](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20S1.png)
 
-#### Шаг 3. Проверьте удаленное управление коммутатором S1
+   c. Ping S2:
+   
+![ping S2](https://github.com/EfremovaOD/Otus_Homeworks/blob/b85e40043d0ae61e7d24db7fddb989bc648ef801/photo/Ping%20S2.png)
 
-1. Ипользуем команду telnet в командной строке PC-A 
+3. Подключившись через консоль к коммутатору S2, введите команду **show mac address-table**:
 
-![telnet](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/telnet.png)
+       S2#show mac address-table 
+                 Mac Address Table
+       -------------------------------------------
+       
+       Vlan    Mac Address       Type        Ports 
+       ----    -----------       --------    -----
+       1    0005.5e04.02c3    DYNAMIC     Fa0/1    
+       1    000b.be58.8619    DYNAMIC     Gig0/1
+       1    0090.2b20.79c7    DYNAMIC     Gig0/1
+       1    00e0.8fe9.44a1    DYNAMIC     Gig0/1
 
+4. Повторяем запрос **arp -a** на узле PC-B: 
 
-
-
+       C:\>arp -a 
+       Internet Address      Physical Address      Type
+       192.168.1.1           00e0.8fe9.44a1        dynamic
+       192.168.1.11          0090.2b20.79c7        dynamic
+       192.168.1.12          0002.176b.1ede        dynamic
