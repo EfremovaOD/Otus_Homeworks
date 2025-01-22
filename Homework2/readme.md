@@ -1,4 +1,4 @@
-# Лабораторная работа. Базовая настройка коммутатора 
+# Лабораторная работа. Просмотр таблицы MAC-адресов коммутатора
 ## Топология
 
 ![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/87548ee84b7c8a8f2e1cf37a473efd5e9220a2ad/photo/topology1.png)
