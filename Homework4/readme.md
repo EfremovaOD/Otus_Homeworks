@@ -1,8 +1,7 @@
 # Лабораторная работа. Настройка IPv6-адресов на сетевых устройствах
 ## Топология
 
-![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/a82566b37cab86939f1904f077adea9e3bdf1b87/photo/topology.png)
-
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/89f06be2f138b649186e4fe7c4e2e358ba3b9e9b/photo/homework4/topology_HW4png.png)
 
 
 ## Таблица адресации 
@@ -210,30 +209,32 @@
 1. Откройте окно Свойства Ethernet для каждого ПК и назначьте адресацию IPv6 :
 
 	 PC-A:
-![ip_PCA](https://github.com/EfremovaOD/Otus_Homeworks/blob/c24281ff6885d9dbed39eb8a6538a395232f92c3/photo/ip_PCA.png)
+![ip_PCA](https://github.com/EfremovaOD/Otus_Homeworks/blob/89f06be2f138b649186e4fe7c4e2e358ba3b9e9b/photo/homework4/PC-A_ipv6.png)
 
 	 PC-B:
- ![ip_PCA](https://github.com/EfremovaOD/Otus_Homeworks/blob/c24281ff6885d9dbed39eb8a6538a395232f92c3/photo/ip_PCA.png)
+ ![ip_PCA](https://github.com/EfremovaOD/Otus_Homeworks/blob/89f06be2f138b649186e4fe7c4e2e358ba3b9e9b/photo/homework4/PC-B_ipv6.png)
 
 
 ### Часть 3. Проверка сквозного подключения:
 
 1. С PC-A отправьте эхо-запрос на FE80::1. Это локальный адрес канала, назначенный G0/1 на R1:
    
-			 no ip domain-lookup			
+![PCA](https://github.com/EfremovaOD/Otus_Homeworks/blob/89f06be2f138b649186e4fe7c4e2e358ba3b9e9b/photo/homework4/Ping_PC-A_to_FFE80.png)			
 
 2. Отправьте эхо-запрос на интерфейс управления S1 с PC-A:
 
-			 no ip domain-lookup
+![PCA_to_S1](https://github.com/EfremovaOD/Otus_Homeworks/blob/b738c867f98685b34c646056a7a8062d9dbe8a3a/photo/homework4/Ping_PC-A_to_S1.png)	
+
 
 3. Введите команду tracert на PC-A, чтобы проверить наличие сквозного подключения к PC-B:
 
-			 no ip domain-lookup
+![Tracert](https://github.com/EfremovaOD/Otus_Homeworks/blob/b738c867f98685b34c646056a7a8062d9dbe8a3a/photo/homework4/Tracert_PC-A_to_PC-B.png)	
+
 
 4. С PC-B отправьте эхо-запрос на PC-A:
 
-			 no ip domain-lookup
+![PC-B_to_PC-A](https://github.com/EfremovaOD/Otus_Homeworks/blob/b738c867f98685b34c646056a7a8062d9dbe8a3a/photo/homework4/Ping_PC-B_to_PC-A.png)
 
 5. С PC-B отправьте эхо-запрос на локальный адрес канала G0/0 на R1:
 
-			 no ip domain-lookup
+![PC-B_to_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/b738c867f98685b34c646056a7a8062d9dbe8a3a/photo/homework4/Ping_PC-B_to_G0.png)
