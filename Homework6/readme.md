@@ -23,7 +23,7 @@
 | VLAN  | Имя | Назначенный интерфейс |
 | :------------ |:---------------:| -----:|
 | 10      | Manaagement       | S1: VLAN 10  |
-| 10      | Maanagement       | S2: VLAN 10  | 
+| 10      | Management        | S2: VLAN 10  | 
 | 20      | Sales             | S1: F0/6     |
 | 30      | Operations        | S2: F0/18    |
 | 999     | Parking_Lot       | S1: F0/2-4, F0/7-24, G0/1-2   |
