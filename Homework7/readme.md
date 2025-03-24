@@ -51,8 +51,8 @@
     S1(config)#int vlan 1
     S1(config-if)#ip add 192.168.1.1 255.255.255.0
     S1(config-if)#no shutdown
-    S1(config-if)#
-    S1(config-if)#copy running-config startup-config
+    S1(config-if)#end
+    S1#copy running-config startup-config
 
 #### Шаг 4.	Проверьте связь.
 
