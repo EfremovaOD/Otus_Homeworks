@@ -90,27 +90,82 @@
 
   1. S1:
 
+S1#show  spanning-tree 
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     000B.BE8A.CBC7
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     000B.BE8A.CBC7
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Desg FWD 19        128.2    P2p
+Fa0/4            Desg FWD 19        128.4    P2p
 
 
   2. S2:
 
+S2#show spanning-tree 
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     000B.BE8A.CBC7
+             Cost        19
+             Port        2(FastEthernet0/2)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
 
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0030.A3C5.8617
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Root FWD 19        128.2    P2p
+Fa0/4            Desg FWD 19        128.4    P2p
 
   3. S3:
 
+S3#show spanning-tree
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     000B.BE8A.CBC7
+             Cost        19
+             Port        4(FastEthernet0/4)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
 
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     00E0.8F5E.2769
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Altn BLK 19        128.2    P2p
+Fa0/4            Root FWD 19        128.4    P2p
+
+##### Роль и состояние активных портов на каждом коммутаторе в топологии:
+
+![Topology_act](https://github.com/EfremovaOD/Otus_Homeworks/blob/ecabb1c2b1da0951a182e86d98d8742a05761dab/photo/Homework7/Ping_S1_S3.PNG)
 
  ### С учетом выходных данных, поступающих с коммутаторов, ответьте на следующие вопросы:
   
-  a. Какой коммутатор является корневым мостом? -  S3
+  a. Какой коммутатор является корневым мостом? -  S1
 
-  b. Почему этот коммутатор был выбран протоколом spanning-tree в качестве корневого моста? - S3 имеет наименьший MAC
+  b. Почему этот коммутатор был выбран протоколом spanning-tree в качестве корневого моста? - S1 имеет наименьший MAC
 
-  c. Какие порты на коммутаторе являются корневыми портами? - на  S1 и S2:  f0/4, S3 - корневой и не  имеет корневых портов.
+  c. Какие порты на коммутаторе являются корневыми портами? - на  S2: f0/2 и S3:  f0/4, S1 - корневой и не  имеет корневых портов.
 
-  d. Какие порты на коммутаторе являются назначенными портами? - S3 - корневой  и все его порты являются  назначенными, S2 имет назначенный  порт: f0/2.
+  d. Какие порты на коммутаторе являются назначенными портами? - S1 - корневой  и все его порты являются  назначенными, S2 имет назначенный  порт: f0/4.
 
-  i. Какой порт отображается в качестве альтернативного и в настоящее время заблокирован? - S2: f0/2
+  i. Какой порт отображается в качестве альтернативного и в настоящее время заблокирован? - S3: f0/2
 
   f. Почему протокол spanning-tree выбрал этот порт в качестве невыделенного (заблокированного) порта? - Маршрут считается неэффективным из-за его длинны. Будет использоваться как резервный в случае отказа корневого порта.
 
