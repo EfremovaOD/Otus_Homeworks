@@ -78,7 +78,7 @@
 #### Шаг 2.	Настройте подключенные порты в качестве транковых:
 
     S1(config-if-range)#int range f0/1-4
-    S1(config-if-range)#switch mode trunk
+    S1(config-if-range)#switchport mode trunk
 
 #### Шаг 3.	Включите порты F0/2 и F0/4 на всех коммутаторах:
 
