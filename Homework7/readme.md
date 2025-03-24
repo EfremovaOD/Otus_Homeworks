@@ -41,13 +41,13 @@
     S1(config)#line console 0
     S1(config-line)#password cisco
     S1(config-line)#login
-    S1(config-line)#logging syn
+    S1(config-line)#logging synchronous
     S1(config-line)#line vty 0 4
     S1(config-line)#password cisco
     S1(config-line)#login
     S1(config-line)#exit
     S1(config)#service pass
-    S1(config)#banner motd #UNAUTORIZED ACCESS PROHIBITED#
+    S1(config)#banner motd #*************************ATTENTION********************************#
     S1(config)#int vlan 1
     S1(config-if)#ip add 192.168.1.1 255.255.255.0
     S1(config-if)#no shutdown
@@ -153,7 +153,7 @@ Fa0/4            Root FWD 19        128.4    P2p
 
 ##### Роль и состояние активных портов на каждом коммутаторе в топологии:
 
-![Topology_act](https://github.com/EfremovaOD/Otus_Homeworks/blob/ecabb1c2b1da0951a182e86d98d8742a05761dab/photo/Homework7/Ping_S1_S3.PNG)
+![Topology_act](https://github.com/EfremovaOD/Otus_Homeworks/blob/b241741500b8051f6f91bc5755ca78593359155d/photo/Homework7/Topology_Akt.PNG)
 
  ### С учетом выходных данных, поступающих с коммутаторов, ответьте на следующие вопросы:
   
@@ -172,32 +172,67 @@ Fa0/4            Root FWD 19        128.4    P2p
 
 ### Часть 3. Наблюдение за процессом выбора протоколом STP порта, исходя из стоимости портов.
 
-
 #### Шаг 1. Определите коммутатор с заблокированным портом:
 
+S3#show spanning-tree 
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     000B.BE8A.CBC7
+             Cost        19
+             Port        4(FastEthernet0/4)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
 
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     00E0.8F5E.2769
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Altn BLK 19        128.2    P2p
+Fa0/4            Root FWD 19        128.4    P2p
 
 #### Шаг 2.	Измените стоимость порта:
 
-    S2(config-if)#int f0/4
-    S2(config-if)#spanning-tree vlan 1 cost 18
+    S3(config-if)#int f0/4
+    S3(config-if)#spanning-tree vlan 1 cost 18
 
 #### Шаг 3.	Просмотрите изменения протокола spanning-tree:
 
-  1. S1:
+  1. S2:
 
 
 
-  2. S2:
+  2. S3:
 
 
 
 #### Шаг 4.	Удалите изменения стоимости порта:
 
-    S2(config-if)#int f0/4
-    S2(config-if)#no spanning-tree vlan 1 cost 18
+    S3(config-if)#int f0/4
+    S3(config-if)#no spanning-tree vlan 1 cost 18
 
 ##### Повторно выполните команду show spanning-tree, чтобы подтвердить, что протокол STP сбросил порт на коммутаторе некорневого моста, вернув исходные настройки порта. Протоколу STP требуется примерно 30 секунд, чтобы завершить процесс перевода порта:
+
+S3(config-if)#do show spanning-tree
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     000B.BE8A.CBC7
+             Cost        19
+             Port        4(FastEthernet0/4)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     00E0.8F5E.2769
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Altn BLK 19        128.2    P2p
+Fa0/4            Root FWD 19        128.4    P2p
 
 
 ### Часть 4. Наблюдение за процессом выбора протоколом STP порта, исходя из приоритета портов.
@@ -209,11 +244,30 @@ Fa0/4            Root FWD 19        128.4    P2p
 
   2. Подождите 30 секунд, чтобы протокол STP завершил процесс перевода порта, после чего выполните команду show spanning-tree на коммутаторах некорневого моста:
 
-     2.1. S1:
+     2.1. S2:
 
+S2(config-if-range)#do show spanning-tree
+VLAN0001
+  Spanning tree enabled protocol ieee
+  Root ID    Priority    32769
+             Address     000B.BE8A.CBC7
+             Cost        19
+             Port        1(FastEthernet0/1)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
 
+  Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+             Address     0030.A3C5.8617
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
 
-     2.2. S2:
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/1            Root FWD 19        128.1    P2p
+Fa0/2            Altn BLK 19        128.2    P2p
+Fa0/4            Desg FWD 19        128.4    P2p
+Fa0/3            Desg FWD 19        128.3    P2p
+
+     2.2. S3:
 
 
 
