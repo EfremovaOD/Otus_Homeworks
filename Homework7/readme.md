@@ -289,52 +289,52 @@
 
   2. Подождите 30 секунд, чтобы протокол STP завершил процесс перевода порта, после чего выполните команду show spanning-tree на коммутаторах некорневого моста:
 
-     2.1. S2:
+    2.1. S2:
 
-    S2#show spanning-tree 
-    VLAN0001
-     Spanning tree enabled protocol ieee
-     Root ID    Priority    32769
-              Address     000B.BE8A.CBC7
-              Cost        19
-              Port        1(FastEthernet0/1)
-              Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-   
-     Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-              Address     0030.A3C5.8617
-              Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-              Aging Time  20
-   
-    Interface        Role Sts Cost      Prio.Nbr Type
-    ---------------- ---- --- --------- -------- --------------------------------
-    Fa0/1            Root FWD 19        128.1    P2p
-    Fa0/2            Altn BLK 19        128.2    P2p
-    Fa0/4            Desg FWD 19        128.4    P2p
-    Fa0/3            Desg FWD 19        128.3    P2p
+      S2#show spanning-tree 
+      VLAN0001
+       Spanning tree enabled protocol ieee
+       Root ID    Priority    32769
+                Address     000B.BE8A.CBC7
+                Cost        19
+                Port        1(FastEthernet0/1)
+                Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+     
+       Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                Address     0030.A3C5.8617
+                Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+                Aging Time  20
+     
+      Interface        Role Sts Cost      Prio.Nbr Type
+      ---------------- ---- --- --------- -------- --------------------------------
+      Fa0/1            Root FWD 19        128.1    P2p
+      Fa0/2            Altn BLK 19        128.2    P2p
+      Fa0/4            Desg FWD 19        128.4    P2p
+      Fa0/3            Desg FWD 19        128.3    P2p
 
 
-     2.2. S3:
+    2.2. S3:
 
-    S3#show spanning-tree 
-    VLAN0001
-     Spanning tree enabled protocol ieee
-     Root ID    Priority    32769
-              Address     000B.BE8A.CBC7
-              Cost        19
-              Port        3(FastEthernet0/3)
-              Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-   
-     Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
-              Address     00E0.8F5E.2769
-              Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-              Aging Time  20
-   
-    Interface        Role Sts Cost      Prio.Nbr Type
-    ---------------- ---- --- --------- -------- --------------------------------
-    Fa0/1            Altn BLK 18        128.1    P2p
-    Fa0/2            Altn BLK 18        128.2    P2p
-    Fa0/3            Root FWD 19        128.3    P2p
-    Fa0/4            Altn BLK 19        128.4    P2p
+      S3#show spanning-tree 
+      VLAN0001
+       Spanning tree enabled protocol ieee
+       Root ID    Priority    32769
+                Address     000B.BE8A.CBC7
+                Cost        19
+                Port        3(FastEthernet0/3)
+                Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+     
+       Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                Address     00E0.8F5E.2769
+                Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+                Aging Time  20
+     
+      Interface        Role Sts Cost      Prio.Nbr Type
+      ---------------- ---- --- --------- -------- --------------------------------
+      Fa0/1            Altn BLK 18        128.1    P2p
+      Fa0/2            Altn BLK 18        128.2    P2p
+      Fa0/3            Root FWD 19        128.3    P2p
+      Fa0/4            Altn BLK 19        128.4    P2p
 
 ##### Вопросы: 
 
