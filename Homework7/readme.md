@@ -185,8 +185,8 @@
 
 #### Шаг 1. Определите коммутатор с заблокированным портом:
 
-   S3#show spanning-tree 
-   VLAN0001
+    S3#show spanning-tree 
+    VLAN0001
       Spanning tree enabled protocol ieee
       Root ID    Priority    32769
               Address     000B.BE8A.CBC7
@@ -194,15 +194,15 @@
               Port        4(FastEthernet0/4)
               Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
    
-      Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+    Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
               Address     00E0.8F5E.2769
               Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
               Aging Time  20
    
-   Interface        Role Sts Cost      Prio.Nbr Type
-   ---------------- ---- --- --------- -------- --------------------------------
-   Fa0/2            Altn BLK 19        128.2    P2p
-   Fa0/4            Root FWD 19        128.4    P2p
+    Interface        Role Sts Cost      Prio.Nbr Type
+    ---------------- ---- --- --------- -------- --------------------------------
+    Fa0/2            Altn BLK 19        128.2    P2p
+    Fa0/4            Root FWD 19        128.4    P2p
 
 #### Шаг 2.	Измените стоимость порта:
 
@@ -214,7 +214,7 @@
   1. S2:
 
     S2#show spanning-tree 
-   VLAN0001
+    VLAN0001
      Spanning tree enabled protocol ieee
      Root ID    Priority    32769
               Address     000B.BE8A.CBC7
@@ -222,7 +222,7 @@
               Port        2(FastEthernet0/2)
               Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
    
-     Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+    Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
               Address     0030.A3C5.8617
               Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
               Aging Time  20
@@ -243,7 +243,7 @@
               Port        4(FastEthernet0/4)
               Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
    
-     Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+    Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
               Address     00E0.8F5E.2769
               Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
               Aging Time  20
@@ -338,9 +338,13 @@
 
 ##### Вопросы: 
 
-  1. Какой порт выбран протоколом STP в качестве порта корневого моста на каждом коммутаторе некорневого моста - **S2: f0/1, S3: f0/3.**
+  1. Какой порт выбран протоколом STP в качестве порта корневого моста на каждом коммутаторе некорневого моста S2:
+  
+    f0/1, S3: f0/3.
 
-  2. Почему протокол STP выбрал эти порты в качестве портов корневого моста на этих коммутаторах - **Они подключены напрямую к корневому коммутатору и имеют наименьший MAC.**
+  2. Почему протокол STP выбрал эти порты в качестве портов корневого моста на этих коммутаторах ?
+
+    Они подключены напрямую к корневому коммутатору и имеют наименьший MAC.
 
 
 
