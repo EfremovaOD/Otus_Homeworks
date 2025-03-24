@@ -58,15 +58,15 @@
 
   1. Успешно ли выполняется эхо-запрос от коммутатора S1 на коммутатор S2?
 
-![PinG_S1_to_S2](https://github.com/EfremovaOD/Otus_Homeworks/blob/2d77218e6e3a00dc0b4a888e897a9c2e3183eaeb/photo/homework6/Topology.png)
+![PinG_S1_to_S2](https://github.com/EfremovaOD/Otus_Homeworks/blob/ecabb1c2b1da0951a182e86d98d8742a05761dab/photo/Homework7/Ping_S1_S2.PNG)
      
   2. Успешно ли выполняется эхо-запрос от коммутатора S1 на коммутатор S3?
 
-![PinG_S1_to_S3](https://github.com/EfremovaOD/Otus_Homeworks/blob/2d77218e6e3a00dc0b4a888e897a9c2e3183eaeb/photo/homework6/Topology.png)
+![PinG_S1_to_S3](https://github.com/EfremovaOD/Otus_Homeworks/blob/ecabb1c2b1da0951a182e86d98d8742a05761dab/photo/Homework7/Ping_S1_S3.PNG)
      
   3. Успешно ли выполняется эхо-запрос от коммутатора S2 на коммутатор S3? -
 
-![PinG_S2_to_S3](https://github.com/EfremovaOD/Otus_Homeworks/blob/2d77218e6e3a00dc0b4a888e897a9c2e3183eaeb/photo/homework6/Topology.png)
+![PinG_S2_to_S3](https://github.com/EfremovaOD/Otus_Homeworks/blob/ecabb1c2b1da0951a182e86d98d8742a05761dab/photo/Homework7/Ping_S2_S3.PNG)
 
 ### Часть 2. Определение корневого моста.
 
