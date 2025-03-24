@@ -42,7 +42,6 @@
     S1(config)#line console 0
     S1(config-line)#password cisco
     S1(config-line)#login
-    S1(config-line)#logging synchronous
     S1(config-line)#line vty 0 4
     S1(config-line)#password cisco
     S1(config-line)#login
