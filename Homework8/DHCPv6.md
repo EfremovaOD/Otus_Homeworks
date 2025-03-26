@@ -53,7 +53,7 @@
     S1(config-line)#password cisco
     S1(config-line)#login
     S1(config-line)#exit
-    S1(config)#service pass
+    S1(config)#service password-encryption
     S1(config)#banner motd #*************************ATTENTION********************************#
     S1(config-if)#int range f0/1-24, g0/2
     S1(config-if-range)#shutdown
