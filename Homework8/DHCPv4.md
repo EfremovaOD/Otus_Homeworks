@@ -86,7 +86,7 @@
     Enter TEXT message.  End with the character '#'.
         *************************************************************************************ATTENTION*****************************************************************************#
     R1(config)#exit
-    R1#clock set 21:00:00 mar 26 2025
+    R1#clock set 22:15:00 mar 26 2025
     R1#conf t
     R1(config)#line console 0
     R1(config-line)#password cisco
@@ -145,13 +145,210 @@
 
 #### Шаг 6.	Настройте базовые параметры каждого коммутатора:
 
+   1. На примере S1:
+
+    Switch>
+    Switch>en
+    Switch#conf t
+    Enter configuration commands, one per line.  End with CNTL/Z.
+    Switch(config)#no ip domain-lookup
+    Switch(config)#
+    Switch(config)#enable secret class
+    Switch(config)#
+    Switch(config)#service password
+    Switch(config)#service password-encryption 
+    Switch(config)#
+    Switch(config)#hostname S1
+    S1(config)#
+    S1(config)#banner motd #
+    Enter TEXT message.  End with the character '#'.
+    *******************ATTENTION*****************************#
+
+    S1(config)#exit
+    S1#clock set 22:32:00 mar 26 2025
+    S1#conf t
+    S1(config)#line console 0
+    S1(config-line)#
+    S1(config-line)#pass cisco
+    S1(config-line)#login
+    S1(config-line)#exit
+    S1(config)#line vty 0 4
+    S1(config-line)#pass cisco
+    S1(config-line)#login
+    S1(config-line)#
+    S1(config-line)#end
+    S1#copy running-config startup-config 
+
+#### Шаг 7.	Создайте сети VLAN на коммутаторе S1:
+
+  1. S1:
+
+    S1#conf t
+    S1(config)#vlan 100
+    S1(config-vlan)#name Clients
+    S1(config-vlan)#vlan 200
+    S1(config-vlan)#name Management
+    S1(config-vlan)#
+    S1(config-vlan)#vlan 999
+    S1(config-vlan)#name Parking_Lot
+    S1(config-vlan)#
+    S1(config-vlan)#vlan 1000
+    S1(config-vlan)#name NATIVE
+    S1(config-vlan)#exit
+    S1(config)#int vlan 200
+    S1(config-if)#ip address 192.168.1.66 255.255.255.224
+    S1(config-if)#no shutdown
+    S1(config-if)#exit
+    S1(config)#ip default-gateway 192.168.1.65
+    S1(config)#int range f0/1-4,f0/7-24,g0/1-2
+    S1(config-if-range)#switchport mode access
+    S1(config-if-range)#switchport access vlan 999
+    S1(config-if-range)#shutdown
+
+  2. S2:
+
+    S2#conf t
+    S2(config)#int vlan 1
+    S2(config-if)#ip add 192.168.1.2 255.255.255.192
+    S2(config-if)#
+    S2(config-if)#no shutdown
+    S2(config-if)#exit
+    S2(config)#
+    S2(config)#ip default-gateway 192.168.1.1
+    S2(config)#int range f0/1-4,f0/6-17,f0/19-24,gi0/1-2
+    S2(config-if-range)#shutdown
 
 
+#### Шаг 8.	Назначьте сети VLAN соответствующим интерфейсам коммутатора:
+
+  1.	Назначьте используемые порты соответствующей VLAN (указанной в таблице VLAN выше) и настройте их для режима статического доступа:
+
+    S1(config)#int f0/6
+    S1(config-if)#switchport mode access
+    S1(config-if)#switchport access vlan 100
+    S2(config)#int f0/18
+    S2(config-if)#switchport mode access
+    S2(config-if)#switchport access vlan 1
+
+  2.	Убедитесь, что VLAN назначены на правильные интерфейсы: **sh vlan**
+     
+##### Вопрос: Почему интерфейс F0/5 указан в VLAN 1?
+
+    Ответ: vlan 1 является стандартным и назначается по умолчанию для портов, которые не  назначены на  другие vlan.
 
 
+#### Шаг 9.	Вручную настройте интерфейс S1 F0/5 в качестве транка 802.1Q:
+
+    S1(config)#int f0/5
+    S1(config-if)#switchport mode trunk
+    S1(config-if)#switchport trunk native vlan 1000
+    S1(config-if)#switchport trunk allowed vlan 100,200,1000
+    S1(config-if)#do wr
 
 
+### Часть 2.	Настройка и проверка двух серверов DHCPv4 на R1.
 
+#### Шаг 1.	Настройте R1 с пулами DHCPv4 для двух поддерживаемых подсетей. Ниже приведен только пул DHCP для подсети A:
+
+1.	Исключите первые пять используемых адресов из каждого пула адресов
+Откройте окно конфигурации
+2.	Создайте пул DHCP (используйте уникальное имя для каждого пула).
+3.	Укажите сеть, поддерживающую этот DHCP-сервер.
+4.	В качестве имени домена укажите CCNA-lab.com.
+5.	Настройте соответствующий шлюз по умолчанию для каждого пула DHCP.
+6.	Настройте время аренды на 2 дня 12 часов и 30 минут.
+7.	Затем настройте второй пул DHCPv4, используя имя пула R2_Client_LAN и вычислите сеть, маршрутизатор по умолчанию, и используйте то же имя домена и время аренды, что и предыдущий пул DHCP.
+
+###### Подсеть A:
+
+    R1(config)#ip dhcp excluded-address 192.168.1.1 192.168.1.5
+    R1(config)#ip dhcp pool Subnet-A
+    R1(dhcp-config)#network 192.168.1.0 255.255.255.192
+    R1(dhcp-config)#domain-name CCNA-lab.com
+    R1(dhcp-config)#default-router 192.168.1.1
+    R1(dhcp-config)#lease 2 12 30
+
+###### Подсеть C:
+
+    R1(config)#ip dhcp excluded-address 192.168.1.65 192.168.1.70
+    R1(config)#ip dhcp pool Subnet-C
+    R1(dhcp-config)#network 192.168.1.64 255.255.255.224
+    R1(dhcp-config)#domain-name CCNA-lab.com
+    R1(dhcp-config)#default-router 192.168.1.65
+    R1(dhcp-config)#lease 2 12 30
+
+###### Пул R2_Client_LAN 
+
+    R1(config)#ip dhcp excluded-address 192.168.1.97 192.168.1.102
+    R1(config)#ip dhcp pool R2_Client_LAN
+    R1(dhcp-config)#network 192.168.1.96 255.255.255.240
+    R1(dhcp-config)#domain-name CCNA-lab.com
+    R1(dhcp-config)#default-router 192.168.1.97
+    R1(dhcp-config)#lease 2 12 30
+
+
+#### Шаг 2.	Сохраняем конфигурацию.
+
+#### Шаг 3.	Проверка конфигурации сервера DHCPv4:
+
+  1.	Чтобы просмотреть сведения о пуле, выполните команду **show ip dhcp pool**:
+
+![R1_pool](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+
+  2. Выполните команду **show ip dhcp bindings** для проверки установленных назначений адресов DHCP:
+
+![R1_bindings](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  3.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP - глянуть робит ли в PT
+
+#### Шаг 4.	Попытка получить IP-адрес от DHCP на PC-A:
+
+  1.	Из командной строки компьютера PC-A выполните команду **ipconfig /all**:
+
+![PC-A_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
+
+![PC-A_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
+
+![PC-A_ping_R0](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+
+### Часть 3.	Настройка и проверка DHCP-ретрансляции на R2.
+
+#### Шаг 1.	Настройка R2 в качестве агента DHCP-ретрансляции для локальной сети на G0/0/1:
+
+  1.	Настройте команду **ip helper-address** на G0/0/1, указав IP-адрес G0/0/0 R1:
+
+    R2#conf t
+    R2(config-if)#ip helper-address 10.0.0.1
+
+  2.	Сохраняем конфигурацию.
+
+#### Шаг 2.	Попытка получить IP-адрес от DHCP на PC-B:
+
+  1.	Из командной строки компьютера PC-B выполните команду **ipconfig /all**:
+
+![PC-B_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
+
+![PC-B_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
+
+![PC-B_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  4.	Выполните **show ip dhcp binding** для R1 для проверки назначений адресов в DHCP:
+
+![R1_bind](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+
+  5.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP:
+
+![R1_serv_stat](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
 
 
 
