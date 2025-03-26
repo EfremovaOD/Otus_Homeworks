@@ -55,7 +55,7 @@
     S1(config-line)#exit
     S1(config)#service password-encryption
     S1(config)#banner motd #*************************ATTENTION********************************#
-    S1(config-if)#int range f0/1-24, g0/2
+    S1(config-if)#int range f0/1-4,f0/7-24,g0/1-2
     S1(config-if-range)#shutdown
     S1(config-if-range)#end
     S1#copy running-config startup-config
