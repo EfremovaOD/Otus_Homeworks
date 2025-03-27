@@ -186,6 +186,16 @@
     R2(config-if)# ipv6 nd managed-config-flag
     R2(config-if)# ipv6 dhcp relay destination 2001:db8:acad:2::1 g0/0/0
     R2(config-if)# do wr
+
+  2. К сожалению  Pocket tracer не поддерживает **ipv6 dhcp relay**,  так что настроила DHCP IPv6 на R2 вручную:
+
+    R2(config)#ipv6 dhcp pool R2-STATEFUL
+    R2(config-dhcpv6)#add prefix 2001:db8:acad:3:aaa::/80 lifetime 172800 86400
+    R2(config-dhcpv6)#dns-server 2001:DB8:ACAD::254
+    R2(config-dhcpv6)#domain-name STATEFUL.com
+    R2(config-dhcpv6)#int g0/0/1
+    R2(config-if)#ipv6 dhcp server R2-STATEFUL
+    R2(config-if)#ipv6 nd managed-config-flag
     
 #### Шаг 3. Попытка получить адрес IPv6 из DHCPv6 на PC-B:
 
