@@ -113,7 +113,7 @@
 
   3. Убедитесь, что маршрутизация работает с помощью пинга адреса G0/0/1 R2 из R1:
 
-![Ping_R1_R2](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![Ping_R1_R2](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/Ping_R1_to_R2.PNG)
 
   4. Сохраняем текущую конфигурацию.
 
@@ -121,18 +121,18 @@
 
   1. Включите PC-A и убедитесь, что сетевой адаптер настроен для автоматической настройки IPv6:
 
-![PC-A_DHCP](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_DHCP](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-A_DHCP.PNG)
 
   2. Через несколько минут результаты команды **ipconfig** должны показать, что PC-A присвоил себе адрес из сети 2001:db8:1::/64:
 
-![PC-A_IPv6](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_IPv6](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-A_IPv6.PNG)
 
 
 ### Часть 3. Настройка и проверка сервера DHCPv6 без гражданства на R1.
 
 ####  Шаг 1. Более подробно изучите конфигурацию PC-A:
 
-![PC-A_ipconfig](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ipconfig](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-A_ipconfig.PNG)
 
 #### Шаг 2. Настройте R1 для предоставления DHCPv6 без состояния для PC-A:
 
@@ -151,11 +151,11 @@
   3. Сохраняем конфигурацию R1 и перезагружаем PC-A.
   4.	Проверьте вывод **ipconfig /all** и обратите внимание на изменения:
 
-![PC-A_ipconfig_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ipconfig_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-A_ipconfig_v1.PNG)
 
   5. Тестирование подключения с помощью **ping** IP-адреса интерфейса G0/1 R2:
 
-![PC-A_ping_R2](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ping_R2](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-A_Ping_R2.PNG)
 
 
 ### Часть 4. Настройка и проверка состояния DHCPv6 сервера на R1.
@@ -176,7 +176,7 @@
 
 #### Шаг 1. Включите PC-B и проверьте адрес SLAAC, который он генерирует:
 
-![PC-B_ipconfig](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-B_ipconfig](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-B_ipconfig.PNG)
 
 #### Шаг 2. Настройте R2 в качестве агента DHCP-ретрансляции для локальной сети на G0/0/1:
 
@@ -202,11 +202,11 @@
   1. Перезагружаем PC-B.
   2. Откройте командную строку на PC-B и выполните команду **ipconfig /all** и проверьте выходные данные, чтобы увидеть результаты операции ретрансляции DHCPv6:
 
-![PC-B_ipconfig_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-B_ipconfig_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-B_ipconf_v1.PNG)
 
   3. Проверьте подключение с помощью пинга IP-адреса интерфейса R1 G0/0/1:
 
-![PC-B_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-B_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/e0cb15b2724fc9c1f33756f1bb73f9cac4d27cfc/photo/Homework8/DHCPv6/PC-B_ping_R1.PNG)
 
 
 
