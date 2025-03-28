@@ -86,7 +86,7 @@
     Enter TEXT message.  End with the character '#'.
         *************************************************************************************ATTENTION*****************************************************************************#
     R1(config)#exit
-    R1#clock set 22:15:00 mar 26 2025
+    R1#clock set 12:15:00 mar 28 2025
     R1#conf t
     R1(config)#line console 0
     R1(config-line)#password cisco
@@ -95,42 +95,42 @@
     R1(config)#line vty 0 4
     R1(config-line)#password cisco
     R1(config-line)#login
-    R1(config-line)#do wr
+    R1(config-line)#end
+    R1#copy running-config startup-config
 
 #### Шаг 4.	Настройка маршрутизации между сетями VLAN на маршрутизаторе R1:
 
   1.	Активируйте интерфейс G0/0/1 на маршрутизаторе:
 
     R1(config)#int g0/0/1
-    R1(config-if)#no sh
+    R1(config-if)#no shutdown
 
   2.	Настройте подинтерфейсы для каждой VLAN в соответствии с требованиями таблицы IP-адресации. Все субинтерфейсы используют инкапсуляцию 802.1Q и назначаются первый полезный адрес из вычисленного пула IP-адресов. Убедитесь, что подинтерфейсу для native VLAN не назначен IP-адрес. Включите описание для каждого подинтерфейса:
 
     R1(config-if)#int g0/0/1.100
     R1(config-subif)#encapsulation dot1Q 100
-    R1(config-subif)#ip addr 192.168.1.1 255.255.255.192
+    R1(config-subif)#ip address 192.168.1.1 255.255.255.192
     R1(config-subif)#int g0/0/1.200
     R1(config-subif)#encapsulation dot1Q 200
     R1(config-subif)#ip addr 192.168.1.65 255.255.255.224
-    R1(config-subif)#int gi 0/0/1.1000
+    R1(config-subif)#int g0/0/1.1000
     R1(config-subif)#encapsulation dot1Q 1000 native
     R1(config-subif)#no ip address
 
 
-#### Шаг 5.	Настройте G0/1 на R2, затем G0/0/0 и статическую маршрутизацию для обоих маршрутизаторов:
+#### Шаг 5.	Настройте G0/0/1 на R2, затем G0/0/0 и статическую маршрутизацию для обоих маршрутизаторов:
 
   1.	Настройте G0/0/1 на R2 с первым IP-адресом подсети C, рассчитанным ранее:
 
-    R2#conf t
     R2(config)#int g0/0/1
-    R2(config-if)#ip addr 192.168.1.97 255.255.255.240
-    R2(config-if)#no sh
+    R2(config-if)#ip address 192.168.1.97 255.255.255.240
+    R2(config-if)#no shutdown
 
   2.	Настройте интерфейс G0/0/0 для каждого маршрутизатора на основе приведенной выше таблицы IP-адресации:
 
-    R2(config-if)#int gi 0/0/0
-    R2(config-if)#ip addr 10.0.0.2 255.255.255.252
-    R2(config-if)#no sh
+    R2(config-if)#int g0/0/0
+    R2(config-if)#ip address 10.0.0.2 255.255.255.252
+    R2(config-if)#no shutdown
 
   3.	Настройте маршрут по умолчанию на каждом маршрутизаторе, указываемом на IP-адрес G0/0/0 на другом маршрутизаторе:
 
@@ -183,7 +183,6 @@
 
   1. S1:
 
-    S1#conf t
     S1(config)#vlan 100
     S1(config-vlan)#name Clients
     S1(config-vlan)#vlan 200
@@ -205,7 +204,7 @@
     S1(config-if-range)#switchport access vlan 999
     S1(config-if-range)#shutdown
 
-  2. S2:
+  2. Настройте и активируйте интерфейс управления на S2 (VLAN 1), используя второй IP-адрес из подсети, рассчитанный ранее. Кроме того, установите шлюз по умолчанию на S2:
 
     S2#conf t
     S2(config)#int vlan 1
@@ -215,7 +214,7 @@
     S2(config-if)#exit
     S2(config)#
     S2(config)#ip default-gateway 192.168.1.1
-    S2(config)#int range f0/1-4,f0/6-17,f0/19-24,gi0/1-2
+    S2(config)#int range f0/1-4,f0/6-17,f0/19-24,g0/1-2
     S2(config-if-range)#shutdown
 
 
@@ -223,9 +222,14 @@
 
   1.	Назначьте используемые порты соответствующей VLAN (указанной в таблице VLAN выше) и настройте их для режима статического доступа:
 
+  S1:
+  
     S1(config)#int f0/6
     S1(config-if)#switchport mode access
     S1(config-if)#switchport access vlan 100
+
+  S2:
+    
     S2(config)#int f0/18
     S2(config-if)#switchport mode access
     S2(config-if)#switchport access vlan 1
@@ -266,7 +270,7 @@
     R1(dhcp-config)#network 192.168.1.0 255.255.255.192
     R1(dhcp-config)#domain-name CCNA-lab.com
     R1(dhcp-config)#default-router 192.168.1.1
-    R1(dhcp-config)#lease 2 12 30
+    R1(dhcp-config)#lease 2 12 30 -  Pocket Tracer не воспринимает данную команду :(
 
 ###### Подсеть C:
 
@@ -275,7 +279,7 @@
     R1(dhcp-config)#network 192.168.1.64 255.255.255.224
     R1(dhcp-config)#domain-name CCNA-lab.com
     R1(dhcp-config)#default-router 192.168.1.65
-    R1(dhcp-config)#lease 2 12 30
+    R1(dhcp-config)#lease 2 12 30 -  Pocket Tracer не воспринимает данную команду :(
 
 ###### Пул R2_Client_LAN 
 
@@ -293,14 +297,14 @@
 
   1.	Чтобы просмотреть сведения о пуле, выполните команду **show ip dhcp pool**:
 
-![R1_pool](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![R1_dhcp_pool](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
 
 
   2. Выполните команду **show ip dhcp bindings** для проверки установленных назначений адресов DHCP:
 
 ![R1_bindings](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
 
-  3.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP - глянуть робит ли в PT
+  3.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP -  Pocket Tracer не воспринимает данную команду :(
 
 #### Шаг 4.	Попытка получить IP-адрес от DHCP на PC-A:
 
@@ -314,7 +318,7 @@
 
   3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
 
-![PC-A_ping_R0](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
 
 
 ### Часть 3.	Настройка и проверка DHCP-ретрансляции на R2.
@@ -323,7 +327,7 @@
 
   1.	Настройте команду **ip helper-address** на G0/0/1, указав IP-адрес G0/0/0 R1:
 
-    R2#conf t
+    R2(config)#int g0/0/1
     R2(config-if)#ip helper-address 10.0.0.1
 
   2.	Сохраняем конфигурацию.
