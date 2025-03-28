@@ -1,7 +1,7 @@
 # Лабораторная работа - Реализация DHCPv4
 ## Топология
 
-![topology]()
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/Topology.PNG)
 
 ## Таблица адресации 
 
@@ -138,7 +138,7 @@
 
   4.	Убедитесь, что статическая маршрутизация работает с помощью пинга до адреса G0/0/1 R2 от R1:
 
-![Ping_R1_to_R2]()
+![Ping_R1_to_R2](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/Ping_R1_R2.PNG)
 
   5. Сохраняем текущую конфигурацию.
 
@@ -297,12 +297,12 @@
 
   1.	Чтобы просмотреть сведения о пуле, выполните команду **show ip dhcp pool**:
 
-![R1_dhcp_pool]()
+![R1_dhcp_pool](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/R1_dhcp_pool.PNG)
 
 
   2. Выполните команду **show ip dhcp bindings** для проверки установленных назначений адресов DHCP:
 
-![R1_bindings]()
+![R1_bindings](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/R1_bindings.PNG)
 
   3.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP -  Pocket Tracer не воспринимает данную команду :(
 
@@ -310,15 +310,15 @@
 
   1.	Из командной строки компьютера PC-A выполните команду **ipconfig /all**:
 
-![PC-A_ipcon]()
+![PC-A_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/PC-A_ipcon.PNG)
 
   2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
 
-![PC-A_ipcon_v1]()
+![PC-A_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/PC-A_ipcon_v1.PNG)
 
   3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
 
-![PC-A_ping_R1]()
+![PC-A_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/309ebb8d79c0f895ca21e401de403ab883a94876/photo/Homework8/DHCPv4/PC-A_ping_R1.PNG)
 
 
 ### Часть 3.	Настройка и проверка DHCP-ретрансляции на R2.
