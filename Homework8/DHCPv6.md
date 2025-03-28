@@ -1,7 +1,7 @@
 # Лабраторная работа - Настройка DHCPv6
 ## Топология
 
-![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/21ecdff600ded223610c661a44b6f8565f1d59b3/photo/Homework8/DHCPv6/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA.PNG)
 
 ## Таблица адресации 
 
