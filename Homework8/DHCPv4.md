@@ -1,7 +1,7 @@
 # Лабораторная работа - Реализация DHCPv4
 ## Топология
 
-![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![topology]()
 
 ## Таблица адресации 
 
@@ -138,7 +138,7 @@
 
   4.	Убедитесь, что статическая маршрутизация работает с помощью пинга до адреса G0/0/1 R2 от R1:
 
-![Ping_R1_to_R2](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![Ping_R1_to_R2]()
 
   5. Сохраняем текущую конфигурацию.
 
@@ -297,12 +297,12 @@
 
   1.	Чтобы просмотреть сведения о пуле, выполните команду **show ip dhcp pool**:
 
-![R1_dhcp_pool](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![R1_dhcp_pool]()
 
 
   2. Выполните команду **show ip dhcp bindings** для проверки установленных назначений адресов DHCP:
 
-![R1_bindings](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![R1_bindings]()
 
   3.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP -  Pocket Tracer не воспринимает данную команду :(
 
@@ -310,15 +310,15 @@
 
   1.	Из командной строки компьютера PC-A выполните команду **ipconfig /all**:
 
-![PC-A_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ipcon]()
 
   2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
 
-![PC-A_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ipcon_v1]()
 
   3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
 
-![PC-A_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-A_ping_R1]()
 
 
 ### Часть 3.	Настройка и проверка DHCP-ретрансляции на R2.
@@ -336,23 +336,23 @@
 
   1.	Из командной строки компьютера PC-B выполните команду **ipconfig /all**:
 
-![PC-B_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-B_ipcon]()
 
   2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
 
-![PC-B_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-B_ipcon_v1]()
 
   3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
 
-![PC-B_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![PC-B_ping_R1]()
 
   4.	Выполните **show ip dhcp binding** для R1 для проверки назначений адресов в DHCP:
 
-![R1_bind](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![R1_bind]()
 
   5.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP:
 
-![R1_serv_stat](https://github.com/EfremovaOD/Otus_Homeworks/blob/2dee51141b1a4cf28bdd41d1f5469785b38b93aa/photo/Homework7/Topology.PNG)
+![R1_serv_stat]()
 
 
 
