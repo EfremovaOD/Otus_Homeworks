@@ -344,11 +344,11 @@
 
   1.	Из командной строки компьютера PC-B выполните команду **ipconfig /all**:
 
-![PC-B_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/daeef80ff3ad08f15484b763591cd339ef0e6658/photo/Homework8/DHCPv4/PC-B_ipconf.PNG)
+![PC-B_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/01eb671b61a62f938e798fd0ca503d02d9beb7ba/photo/Homework8/DHCPv4/PC-B_ipconf.PNG)
 
   2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
 
-![PC-B_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/daeef80ff3ad08f15484b763591cd339ef0e6658/photo/Homework8/DHCPv4/PC-B_ipconf_v1.PNG)
+![PC-B_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/01eb671b61a62f938e798fd0ca503d02d9beb7ba/photo/Homework8/DHCPv4/PC-B_ipconf_v1.PNG)
 
   3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
 
