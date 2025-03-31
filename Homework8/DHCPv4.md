@@ -128,6 +128,14 @@
 
   2.	Настройте интерфейс G0/0/0 для каждого маршрутизатора на основе приведенной выше таблицы IP-адресации:
 
+  R1:
+    
+    R1(config-if)#int g0/0/0
+    R1(config-if)#ip address 10.0.0.1 255.255.255.252
+    R1(config-if)#no shutdown   
+   
+   R2:   
+    
     R2(config-if)#int g0/0/0
     R2(config-if)#ip address 10.0.0.2 255.255.255.252
     R2(config-if)#no shutdown
@@ -336,23 +344,23 @@
 
   1.	Из командной строки компьютера PC-B выполните команду **ipconfig /all**:
 
-![PC-B_ipcon]()
+![PC-B_ipcon](https://github.com/EfremovaOD/Otus_Homeworks/blob/daeef80ff3ad08f15484b763591cd339ef0e6658/photo/Homework8/DHCPv4/PC-B_ipconf.PNG)
 
   2.	После завершения процесса обновления выполните команду **ipconfig** для просмотра новой информации об IP-адресе:
 
-![PC-B_ipcon_v1]()
+![PC-B_ipcon_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/daeef80ff3ad08f15484b763591cd339ef0e6658/photo/Homework8/DHCPv4/PC-B_ipconf_v1.PNG)
 
   3.	Проверьте подключение с помощью **ping** IP-адреса интерфейса R1 G0/0/1:
 
-![PC-B_ping_R1]()
+![PC-B_ping_R1](https://github.com/EfremovaOD/Otus_Homeworks/blob/daeef80ff3ad08f15484b763591cd339ef0e6658/photo/Homework8/DHCPv4/PC-B_ping_R1.PNG)
 
   4.	Выполните **show ip dhcp binding** для R1 для проверки назначений адресов в DHCP:
 
-![R1_bind]()
+![R1_bind](https://github.com/EfremovaOD/Otus_Homeworks/blob/daeef80ff3ad08f15484b763591cd339ef0e6658/photo/Homework8/DHCPv4/R1_bindi.PNG)
 
   5.	Выполните команду **show ip dhcp server statistics** для проверки сообщений DHCP:
 
-![R1_serv_stat]()
+    К сожалению в Pocket Tracer данная команда не реализована.
 
 
 
