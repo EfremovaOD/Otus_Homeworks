@@ -46,8 +46,7 @@
     R1(config)#line console 0
     R1(config-line)#password cisco
     R1(config-line)#login
-    R1(config-line)#exit
-    R1(config)#line vty 0 4
+    R1(config-line)#line vty 0 4
     R1(config-line)#password cisco
     R1(config-line)#login
     R1(config-line)#end
@@ -77,8 +76,7 @@
     S1(config-line)#
     S1(config-line)#pass cisco
     S1(config-line)#login
-    S1(config-line)#exit
-    S1(config)#line vty 0 4
+    S1(config-line)#line vty 0 4
     S1(config-line)#pass cisco
     S1(config-line)#login
     S1(config-line)#
@@ -100,32 +98,36 @@
 ###### R1:
 
     R1#conf t
-    R1(config)#int gi 0/0/1
-    R1(config-if)#ip addr 10.53.0.1 255.255.255.0
+    R1(config)#int g0/0/1
+    R1(config-if)#ip address 10.53.0.1 255.255.255.0
     R1(config-if)#no shutdown
     R1(config-if)#int loopback1
-    ip addr 172.16.1.1 255.255.255.0
-    no shutdown
-    do wr
-    router ospf 56
-    router-id 1.1.1.1
-    network 10.53.0.0 0.0.0.255 area 0
-    exit
-    do wr
+    R1(config-if)#ip addr 172.16.1.1 255.255.255.0
+    R1(config-if)#no shutdown
+    R1(config-if)#router ospf 56
+    R1(config-router)#router-id 1.1.1.1
+    R1(config-router)#network 10.53.0.0 0.0.0.255 area 0
+
 
 ###### R2:
 
-    conf t
-    router ospf 56
-    router-id 2.2.2.2
-    network 10.53.0.0 0.0.0.255 area 0
-    network 192.168.1.0 0.0.0.255 area 0
-    exit
-    do wr
+    R2#conf t
+    R2(config)#int g0/0/1
+    R2(config-if)#ip address 10.53.0.2 255.255.255.0
+    R2(config-if)#no shutdown
+    R2(config-if)#int loopback1
+    R2(config-if)#ip addr 192.168.1.1 255.255.255.0
+    R2(config-if)#no shutdown
+    R2(config-if)#router ospf 56
+    R2(config-router)#router-id 2.2.2.2
+    R2(config-router)#network 10.53.0.0 0.0.0.255 area 0
+    R2(config-router)#network 192.168.1.0 0.0.0.255 area 0
 
 6.	Убедитесь, что OSPFv2 работает между маршрутизаторами. Выполните команду, чтобы убедиться, что R1 и R2 сформировали смежность:
 
   ![R1_sh_ip_route]() 
+
+  ![R2_sh_ip_route]() 
 
 7.	На R1 выполните команду show ip route ospf, чтобы убедиться, что сеть R2 Loopback1 присутствует в таблице маршрутизации. Обратите внимание, что поведение OSPF по умолчанию заключается в объявлении интерфейса обратной связи в качестве маршрута узла с использованием 32-битной маски.
 
@@ -148,38 +150,35 @@
 
 ###### R1:
 
-conf t
-int gi 0/0/1
-ip ospf priority 50
-ip ospf hello-interval 30
-ip ospf dead-interval 120
-exit
-ip route 0.0.0.0 0.0.0.0 loopback 1
-router ospf 56
-default-information originate
-ex
-router ospf 56
-auto-cost reference-bandwidth 1000
-end
-clear ip ospf process
-Reset ALL OSPF processes? [no]: y
-wr
+R1(config)#int g0/0/1
+R1(config-if)#ip ospf priority 50
+R1(config-if)#ip ospf hello-interval 30
+R1(config-if)#ip ospf dead-interval 120
+R1(config-if)#exit
+R1(config)#ip route 0.0.0.0 0.0.0.0 loopback 1
+R1(config)#router ospf 56
+R1(config-router)#default-information originate
+R1(config)#exit
+R1(config)#router ospf 56
+R1(config-router)#auto-cost reference-bandwidth 1000
+R1(config-router)#end
+R1#clear ip ospf process
+R1#Reset ALL OSPF processes? [no]: y
 
  ###### R2:
 
-conf t
-int gi 0/0/1
-ip ospf hello-interval 30
-ip ospf dead-interval 120
-int loop 1
-ip ospf network point-to-point
-ex
-router ospf 56
-passive-interface loop 1
-auto-cost reference-bandwidth 1000
-end
-clear ip ospf process
-Reset ALL OSPF processes? [no]: y
+R2(config)#int g0/0/1
+R2(config-if)#ip ospf hello-interval 30
+R2(config-if)#ip ospf dead-interval 120
+R2(config-if)#int loop 1
+R2(config-if)#ip ospf network point-to-point
+R2(config-if)#exit
+R2(config)#router ospf 56
+R2(config-router)#passive-interface loop 1
+R2(config-router)#auto-cost reference-bandwidth 1000
+R2(config-router)#end
+R2#clear ip ospf process
+R2#Reset ALL OSPF processes? [no]: y
 
 #### Шаг 2. Убедитесь, что оптимизация OSPFv2 реализовалась.
 
@@ -190,7 +189,7 @@ Reset ALL OSPF processes? [no]: y
 
   2.	На R1 выполните команду **show ip route ospf**, чтобы убедиться, что сеть R2 Loopback1 присутствует в таблице маршрутизации. Обратите внимание на разницу в метрике между этим выходным и предыдущим выходным. Также обратите внимание, что маска теперь составляет 24 бита, в отличие от 32 битов, ранее объявленных:
 
-![R1_sh_ip_route_ospf]()
+![R1_sh_ip_route_ospf_]()
 
   3.	Введите команду **show ip route ospf** на маршрутизаторе R2. Единственная информация о маршруте OSPF должна быть распространяемый по умолчанию маршрут R1:
 
