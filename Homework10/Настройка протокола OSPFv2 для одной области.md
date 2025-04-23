@@ -1,7 +1,7 @@
 # Лабораторная работа. Настройка протокола OSPFv2 для одной области
 ## Топология
 
-![topology]()
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/topology.PNG)
 
 ## Таблица адресации 
 
@@ -125,17 +125,16 @@
 
 6.	Убедитесь, что OSPFv2 работает между маршрутизаторами. Выполните команду, чтобы убедиться, что R1 и R2 сформировали смежность:
 
-  ![R1_sh_ip_route]() 
+  ![R1_sh_ip_route](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/R1_sh_ip_route.PNG) 
 
-  ![R2_sh_ip_route]() 
 
 7.	На R1 выполните команду show ip route ospf, чтобы убедиться, что сеть R2 Loopback1 присутствует в таблице маршрутизации. Обратите внимание, что поведение OSPF по умолчанию заключается в объявлении интерфейса обратной связи в качестве маршрута узла с использованием 32-битной маски.
 
-  ![R1_sh_ip_route_ospf]() 
+  ![R1_sh_ip_route_ospf](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/R1_sh_ip_route_ospf.PNG) 
   
 9.	Запустите Ping до  адреса интерфейса R2 Loopback 1 из R1. Выполнение команды ping должно быть успешным.
  
-  ![R1_ping]()
+  ![R1_ping](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/R2_ping.png)
 
  ### Часть 3. Оптимизация и проверка конфигурации OSPFv2 для одной области.
 
@@ -150,46 +149,44 @@
 
 ###### R1:
 
-R1(config)#int g0/0/1
-R1(config-if)#ip ospf priority 50
-R1(config-if)#ip ospf hello-interval 30
-R1(config-if)#ip ospf dead-interval 120
-R1(config-if)#exit
-R1(config)#ip route 0.0.0.0 0.0.0.0 loopback 1
-R1(config)#router ospf 56
-R1(config-router)#default-information originate
-R1(config)#exit
-R1(config)#router ospf 56
-R1(config-router)#auto-cost reference-bandwidth 1000
-R1(config-router)#end
-R1#clear ip ospf process
-R1#Reset ALL OSPF processes? [no]: y
+    R1(config)#int g0/0/1
+    R1(config-if)#ip ospf priority 50
+    R1(config-if)#ip ospf hello-interval 30
+    R1(config-if)#ip ospf dead-interval 120
+    R1(config-if)#exit
+    R1(config)#ip route 0.0.0.0 0.0.0.0 loopback 1
+    R1(config)#router ospf 56
+    R1(config-router)#default-information originate
+    R1(config-router)#auto-cost reference-bandwidth 1000
+    R1(config-router)#end
+    R1#clear ip ospf process
+    R1#Reset ALL OSPF processes? [no]: y
 
  ###### R2:
 
-R2(config)#int g0/0/1
-R2(config-if)#ip ospf hello-interval 30
-R2(config-if)#ip ospf dead-interval 120
-R2(config-if)#int loop 1
-R2(config-if)#ip ospf network point-to-point
-R2(config-if)#exit
-R2(config)#router ospf 56
-R2(config-router)#passive-interface loop 1
-R2(config-router)#auto-cost reference-bandwidth 1000
-R2(config-router)#end
-R2#clear ip ospf process
-R2#Reset ALL OSPF processes? [no]: y
+    R2(config)#int g0/0/1
+    R2(config-if)#ip ospf hello-interval 30
+    R2(config-if)#ip ospf dead-interval 120
+    R2(config-if)#int loop 1
+    R2(config-if)#ip ospf network point-to-point
+    R2(config-if)#exit
+    R2(config)#router ospf 56
+    R2(config-router)#passive-interface loop 1
+    R2(config-router)#auto-cost reference-bandwidth 1000
+    R2(config-router)#end
+    R2#clear ip ospf process
+    R2#Reset ALL OSPF processes? [no]: y
 
 #### Шаг 2. Убедитесь, что оптимизация OSPFv2 реализовалась.
 
   1.	Выполните команду **show ip ospf interface g0/0/1** на R1 и убедитесь, что приоритет интерфейса установлен равным 50, а временные интервалы — Hello 30, Dead 120, а тип сети по умолчанию — Broadcast:
 
-![R1_sh_ip_ospf_int_g0]()
+![R1_sh_ip_ospf_int_g0](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/R1_sh_ip_ospf_int_g0.PNG)
 
 
   2.	На R1 выполните команду **show ip route ospf**, чтобы убедиться, что сеть R2 Loopback1 присутствует в таблице маршрутизации. Обратите внимание на разницу в метрике между этим выходным и предыдущим выходным. Также обратите внимание, что маска теперь составляет 24 бита, в отличие от 32 битов, ранее объявленных:
 
-![R1_sh_ip_route_ospf_]()
+![R1_sh_ip_route_ospf_](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/R1_sh_ip_route_ospf_.PNG)
 
   3.	Введите команду **show ip route ospf** на маршрутизаторе R2. Единственная информация о маршруте OSPF должна быть распространяемый по умолчанию маршрут R1:
 
@@ -197,5 +194,5 @@ R2#Reset ALL OSPF processes? [no]: y
 
   4.	Запустите **Ping** до адреса интерфейса R1 Loopback 1 из R2. Выполнение команды **ping** должно быть успешным:
 
-![R2_ping]()
+![R2_ping](https://github.com/EfremovaOD/Otus_Homeworks/blob/80dda3dd720cd084dd2782f197596609690d70a8/photo/Homework10/R2_ping.png)
     
