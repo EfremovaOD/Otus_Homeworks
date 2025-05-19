@@ -249,32 +249,32 @@
 3.	Настройте интерфейс Loopback 1 на R1 с адресацией из приведенной выше таблицы.
 4.	С помощью команды **show ip interface brief** проверьте конфигурацию подынтерфейса.
 
-    conf t
-    int g0/0/1
-    no sh
-    int g0/0/1.20
-    encap dot 20
-    ip addr 10.20.0.1 255.255.255.0
-    desc Management
-    no sh
-    int g0/0/1.30
-    encap dot 30
-    ip addr 10.30.0.1 255.255.255.0
-    desc Operations
-    no sh
-    int g0/0/1.40
-    encap dot 40
-    ip addr 10.40.0.1 255.255.255.0
-    desc Sales
-    no sh
-    int g0/0/1.1000
-    desc PatkingLot
-    no sh
-    int loop 1
-    ip addr 172.16.1.1 255.255.255.0
-    no sh
-    end
-    wr
+         conf t
+         int g0/0/1
+         no sh
+         int g0/0/1.20
+         encap dot 20
+         ip addr 10.20.0.1 255.255.255.0
+         desc Management
+         no sh
+         int g0/0/1.30
+         encap dot 30
+         ip addr 10.30.0.1 255.255.255.0
+         desc Operations
+         no sh
+         int g0/0/1.40
+         encap dot 40
+         ip addr 10.40.0.1 255.255.255.0
+         desc Sales
+         no sh
+         int g0/0/1.1000
+         desc PatkingLot
+         no sh
+         int loop 1
+         ip addr 172.16.1.1 255.255.255.0
+         no sh
+         end
+         wr
 
 ![R1_sh_ip_int_br]()
 
@@ -298,16 +298,16 @@
 3.	Генерируйте криптоключи с помощью 1024 битного модуля.
 4.	Настройте первые пять линий VTY на каждом устройстве, чтобы поддерживать только SSH-соединения и с локальной аутентификацией.
 
-    conf t
-    username SSHadmin privilege 15 secret 5 $cisco123!
-    ip domain-name ccna-lab.com
-    crypto key generate rsa general-keys modulus 1024
-    line vty 0 4
-    logging synchronous
-    login local
-    transport input ssh
-    end
-    wr
+         conf t
+         username SSHadmin privilege 15 secret 5 $cisco123!
+         ip domain-name ccna-lab.com
+         crypto key generate rsa general-keys modulus 1024
+         line vty 0 4
+         logging synchronous
+         login local
+         transport input ssh
+         end
+         wr
 
 #### Шаг 2. Включите защищенные веб-службы с проверкой подлинности на R1.
 
