@@ -121,57 +121,46 @@
 
 
 ##### S1
-    S1#conf t
-    S1(config)#vl 30
-    name Operations
-    ex
-    vl 40
-    name Sales
-    ex
-    vlan 999
-    name ParkingLot
-    ex
-    vlan 20
-    name Management
-    ex
-    int vlan 20
-    ip addr 10.20.0.2 255.255.255.0
-    no sh
-    ex
-    ip default-gateway 10.20.0.1
-    int ra f0/2-4, f0/7-24, g0/1-2
-    sw m ac
-    sw ac vl 999
-    sh
-    end
-    wr
+
+    S1(config)#vlan 20
+    S1(config-vlan)#name Management    
+    S1(config-vlan)#vlan 30
+    S1(config-vlan)#name Operations
+    S1(config-vlan)#vlan 40
+    S1(config-vlan)#name Sales
+    S1(config-vlan)#vlan 999
+    S1(config-vlan)#name ParkingLot
+    S1(config-vlan)#int vlan 20
+    S1(config-if)#ip addr 10.20.0.2 255.255.255.0
+    S1(config-if)#no sh
+    S1(config-if)#exit
+    S1(config)#ip default-gateway 10.20.0.1
+    S1(config)#int range f0/2-4, f0/7-24, g0/1-2
+    S1(config-if-range)#switchport mode access
+    S1(config-if-range)#switchport access vl 999
+    S1(config-if-range)#sh
+    S1(config-if-range)#end
 
 ##### S2 
 
-    conf t
-    vlan 40
-    name Sales
-    ex
-    vlan 999
-    name ParkingLot
-    ex
-    vlan 20
-    name Management
-    ex
-    vlan 30
-    name Operations
-    ex
-    int vlan 20
-    ip addr 10.20.0.3 255.255.255.0
-    no sh
-    ex
-    ip default-gateway 10.20.0.1
-    int ra f0/2-4, f0/6-17, f0/19-24, g0/1-2
-    sw m ac
-    sw ac vl 999
-    sh
-    end
-    wr
+    S2(config)#vlan 20
+    S2(config-vlan)#name Management
+    S2(config-vlan)#vlan 30
+    S2(config-vlan)#name Operations
+    S2(config-vlan)#vlan 40
+    S2(config-vlan)#name Sales
+    S2(config-vlan)#vlan 999
+    S2(config-vlan)#name ParkingLot
+    S2(config-vlan)#int vlan 20
+    S2(config-if)#ip addr 10.20.0.3 255.255.255.0
+    S2(config-if)#no sh
+    S2(config-if)#ex
+    S2(config)#ip default-gateway 10.20.0.1
+    S2(config)#int range f0/2-4, f0/6-17, f0/19-24, g0/1-2
+    S2(config-if-range)#switchport mode access
+    S2(config-if-range)#switchport access vl 999
+    S2(config-if-range)#sh
+    S2(config-if-range)#end
 
 #### Шаг 2. Назначьте сети VLAN соответствующим интерфейсам коммутатора.
 
@@ -180,7 +169,6 @@
 
 ##### S1:
 
-    conf t
     int f0/6
     sw m ac
     sw ac vl 30
@@ -191,7 +179,6 @@
 
 ##### S2:
 
-    conf t
     int f0/5
     sw m ac
     sw ac vl 20
