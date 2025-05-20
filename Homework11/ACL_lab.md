@@ -195,12 +195,10 @@
 3.	В качестве другой части конфигурации транка укажите, что VLAN 10, 20, 30 и 1000 разрешены в транке.
 4.	Выполните команду **show interfaces trunk** для проверки портов магистрали, собственной VLAN и разрешенных VLAN через магистраль.
 
-
-
-    S2(config)#int f0/1
-    S2(config-if)#switchport mode trunk
-    S2(config-if)#switchport trunk native vlan 1000
-    S2(config-if)#switchport trunk allowed vl 10,20,30,1000
+        S2(config)#int f0/1
+        S2(config-if)#switchport mode trunk
+        S2(config-if)#switchport trunk native vlan 1000
+        S2(config-if)#switchport trunk allowed vl 10,20,30,1000
 
 ![S2_sh_int_tr](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/S2_sh_int_tr.PNG)
 
