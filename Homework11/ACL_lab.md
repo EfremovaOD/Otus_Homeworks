@@ -208,12 +208,12 @@
 2.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 3.	Используйте команду **show interfaces trunk** для проверки настроек транка.
 
-    S1(config)#int f0/5
-    S1(config-if)#switchport mode trunk
-    S1(config-if)#switchport trunk native vlan 1000
-    S1(config-if)#sw tr allowed vl 10,20,30,1000
-    S1(config-if)#end
-    S1#copy running-config startup-config 
+        S1(config)#int f0/5
+        S1(config-if)#switchport mode trunk
+        S1(config-if)#switchport trunk native vlan 1000
+        S1(config-if)#sw tr allowed vl 10,20,30,1000
+        S1(config-if)#end
+        S1#copy running-config startup-config 
 
 ![S1_sh_int_tr](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/S1_sh_int_tr.PNG)
 
