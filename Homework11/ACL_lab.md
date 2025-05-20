@@ -169,25 +169,20 @@
 
 ##### S1:
 
-    int f0/6
-    sw m ac
-    sw ac vl 30
-    end
-    wr
+    S1(config)#int f0/6
+    S1(config-if)#switchport mode access
+    S1(config-if)#switchport access vlan 30
 
 ![S1_sh_vlan_brief]()
 
 ##### S2:
 
-    int f0/5
-    sw m ac
-    sw ac vl 20
-    ex
-    int f0/18
-    sw m ac
-    sw ac vl 40
-    end
-    wr
+    S2(config)#int f0/5
+    S2(config-if)#switchport mode access
+    S2(config-if)#switchport access vlan 20
+    S2(config-if)#int f0/18
+    S2(config-if)#switchport mode access
+    S2(config-if)#switchport access vlan 40
 
 ![S2_sh_vlan_brief]()
 
@@ -201,15 +196,13 @@
 4.	Выполните команду **show interfaces trunk** для проверки портов магистрали, собственной VLAN и разрешенных VLAN через магистраль.
 
 
-    conf t
-    int f0/1
-    sw m trunk
-    sw tr native vl 1000
-    sw tr allowed vl 10,20,30,1000
-    end
-    wr
 
-![S1_sh_int_tr]()
+    S2(config)#int f0/1
+    S2(config-if)#switchport mode trunk
+    S2(config-if)#switchport trunk native vlan 1000
+    S2(config-if)#switchport trunk allowed vl 10,20,30,1000
+
+![S2_sh_int_tr]()
 
 #### Шаг 2. Вручную настройте магистральный интерфейс F0/5 на коммутаторе S1.
 
@@ -217,12 +210,11 @@
 2.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 3.	Используйте команду **show interfaces trunk** для проверки настроек транка.
 
-    conf t
-    int f0/5
-    sw m trunk
-    sw tr native vl 1000
-    sw tr allowed vl 10,20,30,1000
-    exit
+    S1(config)#int f0/5
+    S1(config-if)#switchport mode trunk
+    S1(config-if)#switchport trunk native vlan 1000
+    S1(config-if)#sw tr allowed vl 10,20,30,1000
+    S1(config-if)#end
     S1#copy running-config startup-config 
 
 ![S1_sh_int_tr]()
@@ -236,45 +228,40 @@
 3.	Настройте интерфейс Loopback 1 на R1 с адресацией из приведенной выше таблицы.
 4.	С помощью команды **show ip interface brief** проверьте конфигурацию подынтерфейса.
 
-         conf t
-         int g0/0/1
-         no sh
-         int g0/0/1.20
-         encap dot 20
-         ip addr 10.20.0.1 255.255.255.0
-         desc Management
-         no sh
-         int g0/0/1.30
-         encap dot 30
-         ip addr 10.30.0.1 255.255.255.0
-         desc Operations
-         no sh
-         int g0/0/1.40
-         encap dot 40
-         ip addr 10.40.0.1 255.255.255.0
-         desc Sales
-         no sh
-         int g0/0/1.1000
-         desc PatkingLot
-         no sh
-         int loop 1
-         ip addr 172.16.1.1 255.255.255.0
-         no sh
-         end
-         wr
+         R1(config)#int g0/0/1
+         R1(config-if)#no sh
+         R1(config-if)#int g0/0/1.20
+         R1(config-subif)#encapsulation dot1Q 20
+         R1(config-subif)#ip addr 10.20.0.1 255.255.255.0
+         R1(config-subif)#description Management
+         R1(config-subif)#no sh
+         R1(config-subif)#int g0/0/1.30
+         R1(config-subif)#encapsulation dot1Q 30
+         R1(config-subif)#ip addr 10.30.0.1 255.255.255.0
+         R1(config-subif)#description Operations
+         R1(config-subif)#no sh
+         R1(config-subif)#int g0/0/1.40
+         R1(config-subif)#encapsulation dot1Q 40
+         R1(config-subif)#ip addr 10.40.0.1 255.255.255.0
+         R1(config-subif)#description Sales
+         R1(config-subif)#no sh
+         R1(config-subif)#int g0/0/1.1000
+         R1(config-subif)#description PatkingLot
+         R1(config-subif)#no sh
+         R1(config-subif)#int loop 1
+         R1(config-if)#ip addr 172.16.1.1 255.255.255.0
+         R1(config-if)#no sh
+
 
 ![R1_sh_ip_int_br]()
 
 #### Шаг 2. Настройка интерфейса R2 g0/0/1 с использованием адреса из таблицы и маршрута по умолчанию с адресом следующего перехода 10.20.0.1
 
-    R2#conf t
-    int g0/0/1
-    ip addr 10.20.0.4 255.255.255.0
-    no sh
-    ex
-    ip route 0.0.0.0 0.0.0.0 10.20.0.1
-    end
-    wr
+    R2(config)#int g0/0/1
+    R2(config-if)#ip addr 10.20.0.4 255.255.255.0
+    R2(config-if)#no sh
+    R2(config-if)#ex
+    R2(config)#ip route 0.0.0.0 0.0.0.0 10.20.0.1
 
 ### Часть 5. Настройте удаленный доступ.
 
