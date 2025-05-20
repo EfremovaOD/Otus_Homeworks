@@ -1,7 +1,7 @@
 # Лабораторная работа. Настройка и проверка расширенных списков контроля доступа.
 ## Топология
 
-![topology]()
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/Topology.PNG)
 
 ## Таблица адресации 
 
@@ -173,7 +173,7 @@
     S1(config-if)#switchport mode access
     S1(config-if)#switchport access vlan 30
 
-![S1_sh_vlan_brief]()
+![S1_sh_vlan_brief](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/S1_sh_vlan_brief.PNG)
 
 ##### S2:
 
@@ -184,7 +184,7 @@
     S2(config-if)#switchport mode access
     S2(config-if)#switchport access vlan 40
 
-![S2_sh_vlan_brief]()
+![S2_sh_vlan_brief](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/S2_sh_vlan_brief.PNG)
 
 ### Часть 3. ·Настройте транки (магистральные каналы).
 
@@ -202,7 +202,7 @@
     S2(config-if)#switchport trunk native vlan 1000
     S2(config-if)#switchport trunk allowed vl 10,20,30,1000
 
-![S2_sh_int_tr]()
+![S2_sh_int_tr](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/S2_sh_int_tr.PNG)
 
 #### Шаг 2. Вручную настройте магистральный интерфейс F0/5 на коммутаторе S1.
 
@@ -217,7 +217,7 @@
     S1(config-if)#end
     S1#copy running-config startup-config 
 
-![S1_sh_int_tr]()
+![S1_sh_int_tr](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/S1_sh_int_tr.PNG)
 
 ### Часть 4. Настройте маршрутизацию.
 
@@ -253,7 +253,7 @@
          R1(config-if)#no sh
 
 
-![R1_sh_ip_int_br]()
+![R1_sh_ip_int_br](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/R1_sh_ip_int_br.PNG)
 
 #### Шаг 2. Настройка интерфейса R2 g0/0/1 с использованием адреса из таблицы и маршрута по умолчанию с адресом следующего перехода 10.20.0.1
 
@@ -272,16 +272,13 @@
 3.	Генерируйте криптоключи с помощью 1024 битного модуля.
 4.	Настройте первые пять линий VTY на каждом устройстве, чтобы поддерживать только SSH-соединения и с локальной аутентификацией.
 
-         conf t
-         username SSHadmin privilege 15 secret 5 $cisco123!
-         ip domain-name ccna-lab.com
-         crypto key generate rsa general-keys modulus 1024
-         line vty 0 4
-         logging synchronous
-         login local
-         transport input ssh
-         end
-         wr
+         S1(config)#username SSHadmin privilege 15 secret 5 $cisco123!
+         S1(config)#ip domain-name ccna-lab.com
+         S1(config)#crypto key generate rsa general-keys modulus 1024
+         S1(config)#line vty 0 4
+         S1(config-line)#logging synchronous
+         S1(config-line)#login local
+         S1(config-line)#transport input ssh
 
 #### Шаг 2. Включите защищенные веб-службы с проверкой подлинности на R1.
 
@@ -290,16 +287,13 @@
 2.	Настройте R1 для проверки подлинности пользователей, пытающихся подключиться к веб-серверу.
 **R1(config)# ip http authentication local**
 
-В CPT нет возможности настройки http сервера на cisco. Вместо будет https сервер, адреса: **10.20.0.20** и **172.16.2.20**, подключение осуществлено через S1: f0/20:
+В CPT нет возможности настройки http сервера на cisco. Вместо будет https сервер, адреса: **10.20.0.20** и **172.16.2.20**, подключение осуществлено через S1: f0/7:
 
-    conf t
-    int f0/20
-    sw m ac
-    sw ac vl 20
-    desc WEB
-    no sh
-    end
-    wr
+    S1(config)#intint f0/7
+    S1(config-if)#switchport mode access
+    S1(config-if)#switchport access vl 20
+    S1(config-if)#description SERV
+    S1(config-if)#no sh
 
 ### Часть 6. Проверка подключения.
 
@@ -309,9 +303,8 @@
 
 #### Шаг 2. Выполните следующие тесты. Эхозапрос должен пройти успешно.
 
-*Опираясь на предыдущее задание VLAN 10, 20, 30 и 1000 были разрешены магистральному каналу, поэтому ping на 10.40.0.10 не успешный. Если добить vlan 40 в магистральный канал, то все работает.*
+*Опираясь на предыдущее задание только VLAN 10, 20, 30 и 1000 были разрешены магистральному каналу, поэтому ping на 10.40.0.10 не успешный. Если добить vlan 40 в магистральный канал, то все работает.*
 
-**sw tr allowed vl add 40** удалить потом
 
 | От  | Протокол  | Назначение |
 | :------ |:------------:| --------:|
@@ -325,15 +318,31 @@
 | PC-B       | SSH        | 10.20.0.1 |
 | PC-B       | SSH        | 172.16.1.1 |
 
-![PC-A_ping_1]()
-![PC-A_ping_2]()
-![PC-B_ping_1]()
-![PC-B_ping_2]()
-![PC-B_ping_3]()
-![PC-B_https_1]()
-![PC-B_https_2]()
-![PC-B_ssh_1]()
-![PC-B_ssh_2]()
+![PC-A_ping_1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-A_ping_1.PNG)
+![PC-A_ping_2](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-A_ping_2.PNG)
+![PC-B_ping_1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ping_1.PNG)
+![PC-B_ping_2](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ping_2.PNG)
+![PC-B_ping_3](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ping_3.PNG)
+![PC-B_https_1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_https_1.PNG)
+![PC-B_https_2](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_https_2.PNG)
+
+*В связи с доп. поставленным сервером имитируем loopback, внесенные изменения:*
+
+    R1(config)#int g0/0/1.172
+    R1(config-subif)#ip addr 172.16.2.1 255.255.255.0
+    R1(config-subif)#no sh
+
+    S1(config)#vlan 172
+    S1(config-vlan)#name loop_web
+    S1(config-vlan)#int f0/5
+    S1(config-if)#switchport trunk all vlan add 172
+    S1(config-if)#int f0/21
+    S1(config-if)#switchport mode access
+    S1(config-if)#switchport access vlan 172
+    S1(config-if)#no sh
+
+![PC-B_ssh_1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ssh_1.PNG)
+![PC-B_ssh_2](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ssh_2.PNG)
 
 ### Часть 7. Настройка и проверка списков контроля доступа (ACL).
 
@@ -348,41 +357,35 @@
 
 #### Шаг 2. Разработка и применение расширенных списков доступа, которые будут соответствовать требованиям политики безопасности.
 
-    ip ac ex 20-out
-    10 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 22
-    20 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 88
-    21 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 443
-    30 deny icmp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 echo
-    99 permit ip any any
-    ex
-    ip ac ex 40-in
-    10 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 80
-    11 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 443
-    20 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 80
-    21 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 443
-    30 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 80
-    31 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 443
-    40 deny icmp 10.40.0.0 0.0.0.255 host 10.20.0.1 echo
-    41 deny icmp 10.40.0.0 0.0.0.255 host 10.30.0.1 echo
-    99 permit ip any any
-    ex
-    ip ac ex 40-out
-    10 deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255 echo
-    99 permit ip any any
-    ex
-    ip ac ex 30-out
-    10 deny icmp 10.40.0.0 0.0.0.255 10.30.0.0 0.0.0.255 echo
-    99 permit ip any any
-    ex
-    int gi 0/0/1.20
-    ip ac 20-out out
-    int gi 0/0/1.30
-    ip ac 30-out out
-    int gi 0/0/1.40
-    ip ac 40-out out
-    ip ac 40-in in
-    ex
-    do wr
+    R1(config)#ip access-list extended 20-out
+    R1(config-ext-nacl)#10 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 22
+    R1(config-ext-nacl)#20 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 88
+    R1(config-ext-nacl)#21 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 443
+    R1(config-ext-nacl)#30 deny icmp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 echo
+    R1(config-ext-nacl)#99 permit ip any any
+    R1(config-ext-nacl)#ip access-list extended 40-in
+    R1(config-ext-nacl)#10 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 80
+    R1(config-ext-nacl)#11 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 443
+    R1(config-ext-nacl)#20 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 80
+    R1(config-ext-nacl)#21 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 443
+    R1(config-ext-nacl)#30 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 80
+    R1(config-ext-nacl)#31 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 443
+    R1(config-ext-nacl)#40 deny icmp 10.40.0.0 0.0.0.255 host 10.20.0.1 echo
+    R1(config-ext-nacl)#41 deny icmp 10.40.0.0 0.0.0.255 host 10.30.0.1 echo
+    R1(config-ext-nacl)#99 permit ip any any
+    R1(config-ext-nacl)#ip access-list extended 40-out
+    R1(config-ext-nacl)#10 deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255 echo
+    R1(config-ext-nacl)#99 permit ip any any
+    R1(config-ext-nacl)#ip access-list extended 30-out
+    R1(config-ext-nacl)#10 deny icmp 10.40.0.0 0.0.0.255 10.30.0.0 0.0.0.255 echo
+    R1(config-ext-nacl)#99 permit ip any any
+    R1(config-ext-nacl)#int g0/0/1.20
+    R1(config-subif)#ip access-group 20-out out
+    R1(config-subif)#int g0/0/1.30
+    R1(config-subif)#ip access-group 30-out out
+    R1(config-subif)#int g0/0/1.40
+    R1(config-subif)#ip access-group 40-out out
+    R1(config-subif)#ip access-group 40-in in
 
 #### Шаг 3. Убедитесь, что политики безопасности применяются развернутыми списками доступа.
 
@@ -398,12 +401,11 @@
 | PC-B       | SSH        | 10.20.0.1 | Сбой |
 | PC-B       | SSH        | 172.16.1.1 | Успех |
 
-![PC-A_ping_all]()
-![PC-A_ping_all]()
-![PC-B_https_1_v1]()
-![PC-B_https_2_v1]()
-![PC-B_ssh_1_v1]()
-![PC-B_ssh_2_v1]()
+![PC-A_ping_all](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-A_ping_all.PNG)
+![PC-B_ping_all](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ping_all.PNG)
+![PC-B_https_1_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_https_1_v1.PNG)
+![PC-B_https_2_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_https_2_v1.PNG)
+![PC-B_ssh_2_v1](https://github.com/EfremovaOD/Otus_Homeworks/blob/256320132a186c60786a764c73aca1fe0b97d586/photo/Homework11/PC-B_ssh_2_v1.PNG)
 
 
 
