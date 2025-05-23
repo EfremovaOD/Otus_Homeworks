@@ -355,35 +355,25 @@
 
 #### Шаг 2. Разработка и применение расширенных списков доступа, которые будут соответствовать требованиям политики безопасности.
 
-    R1(config)#ip access-list extended 20-out
+    R1(config)#ip access-list extended SALES
     R1(config-ext-nacl)#10 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 22
-    R1(config-ext-nacl)#20 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 88
-    R1(config-ext-nacl)#21 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 443
-    R1(config-ext-nacl)#30 deny icmp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 echo
-    R1(config-ext-nacl)#99 permit ip any any
-    R1(config-ext-nacl)#ip access-list extended 40-in
-    R1(config-ext-nacl)#10 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 80
-    R1(config-ext-nacl)#11 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 443
-    R1(config-ext-nacl)#20 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 80
-    R1(config-ext-nacl)#21 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 443
-    R1(config-ext-nacl)#30 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 80
-    R1(config-ext-nacl)#31 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 443
-    R1(config-ext-nacl)#40 deny icmp 10.40.0.0 0.0.0.255 host 10.20.0.1 echo
-    R1(config-ext-nacl)#41 deny icmp 10.40.0.0 0.0.0.255 host 10.30.0.1 echo
-    R1(config-ext-nacl)#99 permit ip any any
-    R1(config-ext-nacl)#ip access-list extended 40-out
-    R1(config-ext-nacl)#10 deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255 echo
-    R1(config-ext-nacl)#99 permit ip any any
-    R1(config-ext-nacl)#ip access-list extended 30-out
-    R1(config-ext-nacl)#10 deny icmp 10.40.0.0 0.0.0.255 10.30.0.0 0.0.0.255 echo
-    R1(config-ext-nacl)#99 permit ip any any
-    R1(config-ext-nacl)#int g0/0/1.20
-    R1(config-subif)#ip access-group 20-out out
-    R1(config-subif)#int g0/0/1.30
-    R1(config-subif)#ip access-group 30-out out
-    R1(config-subif)#int g0/0/1.40
-    R1(config-subif)#ip access-group 40-out out
-    R1(config-subif)#ip access-group 40-in in
+    R1(config-ext-nacl)#30 deny icmp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255
+    R1(config-ext-nacl)#deny icmp 10.40.0.0 0.0.0.255 10.30.0.0 0.0.0.255
+    R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 range www 443
+    R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.10.0.1 range www 443
+    R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 range www 443
+    R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 range www 443
+    R1(config-ext-nacl)#permit ip any any
+    R1(config-ext-nacl)#int g0/0/1.40
+    R1(config-subif)#ip access-group SALES in
+    R1(config-subif)#exit
+    R1(config)#ip access-list extended OPERATIONS
+    R1(config-ext-nacl)#deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255
+    R1(config-ext-nacl)#permit ip any any
+    R1(config-ext-nacl)#int gig0/0/1.30
+    R1(config-subif)#ip access-group OPERATIONS in
+
+
 
 #### Шаг 3. Убедитесь, что политики безопасности применяются развернутыми списками доступа.
 
