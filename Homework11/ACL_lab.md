@@ -244,7 +244,7 @@
          R1(config-subif)#description Sales
          R1(config-subif)#no sh
          R1(config-subif)#int g0/0/1.1000
-         R1(config-subif)#description PatkingLot
+         R1(config-subif)#description NATIVE
          R1(config-subif)#no sh
          R1(config-subif)#int loop 1
          R1(config-if)#ip addr 172.16.1.1 255.255.255.0
@@ -270,11 +270,11 @@
 3.	Генерируйте криптоключи с помощью 1024 битного модуля.
 4.	Настройте первые пять линий VTY на каждом устройстве, чтобы поддерживать только SSH-соединения и с локальной аутентификацией.
 
-         S1(config)#username SSHadmin privilege 15 secret 5 $cisco123!
+         S1(config)#username SSHadmin privilege 15 secret $cisco123!
          S1(config)#ip domain-name ccna-lab.com
-         S1(config)#crypto key generate rsa general-keys modulus 1024
+         S1(config)#crypto key generate rsa
+         S1(config)#ip ssh ver 2
          S1(config)#line vty 0 4
-         S1(config-line)#logging synchronous
          S1(config-line)#login local
          S1(config-line)#transport input ssh
 
