@@ -54,11 +54,13 @@
 4.	Задайте внутренний (inside) интерфейс:
  
 **R1(config)# interface g0/0/1**
+
 **R1(config-if)# ip nat inside**
 
 5.	Определите внешний (outside) интерфейс:
 
 **R1(config)# interface g0/0/0**
+
 **R1(config-if)# ip nat outside**
 
 
