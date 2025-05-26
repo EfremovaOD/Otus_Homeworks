@@ -2,7 +2,7 @@
 # Лабораторная работа - Настройка NAT для IPv4.
 ## Топология
 
-![topology]()
+![topology](https://github.com/EfremovaOD/Otus_Homeworks/blob/06b13e5e87f242ad5dcf97ece3005039e29b32e7/photo/Topology_hm.PNG)
 
 ## Таблица адресации 
 
